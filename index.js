@@ -76,7 +76,7 @@ class Player {
 
 class Bullet {
   constructor(x, y) {
-    this.x = x;
+    this.x = x + 12;
     this.y = y;
     this.hit = false;
   }
@@ -95,9 +95,11 @@ player.startPosition();
 
 let lastKeyDown = null;
 document.addEventListener("keydown", function(e) {
-  if (e.keyCode === 32) {
+  if (e.keyCode === 32 && lastKeyDown != e.keyCode) {
     let newBullet = new Bullet(player.x, player.y);
     bullets.push(newBullet);
+    const pew = new Audio("assets/laser.mp3");
+    pew.play();
   }
   if (lastKeyDown != e.keyCode) {
     player.move(e);
