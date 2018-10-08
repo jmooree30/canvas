@@ -3,11 +3,12 @@ canvas.height = 475;
 canvas.width = 700;
 const ctx = canvas.getContext("2d");
 let playerShip = new Image();
-playerShip.src = "ships/player_ship.png";
+playerShip.src = "assets/player_ship.png";
 let stars = new Image();
-stars.src = "stars.png";
+stars.src = "assets/stars.png";
 let bullet = new Image();
-bullet.src = "bullet.png";
+bullet.src = "assets/bullet.png";
+let bullets = [];
 
 class Player {
   constructor() {
@@ -71,14 +72,21 @@ class Player {
       this.draw("y", 4);
     }
   }
-
-  shoot() {}
 }
 
 class Bullet {
   constructor(x, y) {
     this.x = x;
     this.y = y;
+    this.hit = false;
+  }
+
+  update() {
+    this.y += -1;
+  }
+
+  remove() {
+    this.hit = true;
   }
 }
 
@@ -87,6 +95,10 @@ player.startPosition();
 
 let lastKeyDown = null;
 document.addEventListener("keydown", function(e) {
+  if (e.keyCode === 32) {
+    let newBullet = new Bullet(player.x, player.y);
+    bullets.push(newBullet);
+  }
   if (lastKeyDown != e.keyCode) {
     player.move(e);
     lastKeyDown = e.keyCode;
@@ -105,4 +117,12 @@ setInterval(function() {
   player.imgTwoY += 1;
   if (player.imgOneY == 550) player.imgOneY = -625;
   if (player.imgTwoY == 550) player.imgTwoY = -625;
+  bullets.forEach(e => {
+    ctx.drawImage(bullet, e.x, e.y);
+    e.update();
+  });
 }, 5);
+const audio = new Audio("assets/sor.mp3");
+document.addEventListener("click", function() {
+  audio.play();
+});
