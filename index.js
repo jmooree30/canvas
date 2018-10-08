@@ -8,7 +8,22 @@ let stars = new Image();
 stars.src = "assets/stars.png";
 let bullet = new Image();
 bullet.src = "assets/bullet.png";
+let enemy = new Image();
+enemy.src = "assets/enemy_2.png";
 let bullets = [];
+let enemies = [];
+
+class Enemy {
+  constructor() {
+    this.x = Math.round(Math.random() * 1000);
+    this.y = -70;
+    this.hit = false;
+  }
+
+  update() {
+    this.y += 3;
+  }
+}
 
 class Player {
   constructor() {
@@ -111,6 +126,11 @@ document.addEventListener("keydown", function(e) {
 });
 
 setInterval(function() {
+  let en = new Enemy();
+  enemies.push(en);
+}, 500);
+
+setInterval(function() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(stars, 0, player.imgOneY);
   ctx.drawImage(stars, 0, player.imgTwoY);
@@ -121,6 +141,11 @@ setInterval(function() {
   if (player.imgTwoY == 550) player.imgTwoY = -625;
   bullets.forEach(e => {
     ctx.drawImage(bullet, e.x, e.y);
+    e.update();
+  });
+
+  enemies.forEach(e => {
+    ctx.drawImage(enemy, e.x, e.y, 40, 40);
     e.update();
   });
 }, 5);
