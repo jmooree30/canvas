@@ -1,6 +1,6 @@
 const canvas = document.getElementById("myCanvas");
 canvas.height = 475;
-canvas.width = 700;
+canvas.width = 1000;
 const ctx = canvas.getContext("2d");
 let playerShip = new Image();
 playerShip.src = "assets/player_ship.png";
@@ -13,12 +13,12 @@ enemy.src = "assets/enemy_2.png";
 let bullets = [];
 let enemies = [];
 let score = 0;
+let time = 100;
 
 class Enemy {
   constructor() {
     this.x = Math.round(Math.random() * 700);
     this.y = -70;
-    this.hit = false;
   }
 
   update() {
@@ -37,7 +37,7 @@ class Enemy {
       ) {
         bullets.splice(index, 1);
         enemies.splice(enemies.indexOf(that), 1);
-        score += 100;
+        score += 50;
       }
       if (e.y < 0) {
         bullets.splice(index, 1);
@@ -114,15 +114,10 @@ class Bullet {
   constructor(x, y) {
     this.x = x + 12;
     this.y = y;
-    this.hit = false;
   }
 
   update() {
     this.y += -1;
-  }
-
-  remove() {
-    this.hit = true;
   }
 }
 
@@ -152,6 +147,10 @@ setInterval(function() {
 }, 500);
 
 setInterval(function() {
+  time -= 1;
+}, 1000);
+
+setInterval(function() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(stars, 0, player.imgOneY);
   ctx.drawImage(stars, 0, player.imgTwoY);
@@ -167,14 +166,13 @@ setInterval(function() {
   });
 
   enemies.forEach(e => {
-    if (e.hit === false) {
-      ctx.drawImage(enemy, e.x, e.y, 40, 40);
-      e.update();
-    }
+    ctx.drawImage(enemy, e.x, e.y, 40, 40);
+    e.update();
   });
   ctx.font = "20px Arial";
   ctx.fillStyle = "white";
-  ctx.fillText(`score: ${score}`, 10, 50);
+  ctx.fillText(`score: ${score}`, 10, 25);
+  ctx.fillText(`time: ${time}`, 10, 50);
 }, 5);
 const audio = new Audio("assets/sor.mp3");
 document.addEventListener("click", function() {

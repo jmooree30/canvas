@@ -1,3 +1,7 @@
+* {
+  font-family: "Press Start 2P", cursive;
+}
+
 html,
 body {
   margin: 0;
@@ -9,9 +13,33 @@ canvas {
   border: 1px solid black;
   border-radius: 8px;
   position: absolute;
-  top: 50%;
+  top: 35%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
   background: black;
+}
+
+.container {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  height: 200px;
+  width: 80%;
+  margin: 0 auto;
+  border: 5px solid black;
+  border-radius: 8px;
+}
+
+.info {
+  padding: 10px;
+  line-height: 1.5;
+}
+
+.controls {
+  text-align: center;
 }
