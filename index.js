@@ -17,7 +17,7 @@ let time = 100;
 
 class Enemy {
   constructor() {
-    this.x = Math.round(Math.random() * 700);
+    this.x = Math.round(Math.random() * 1000);
     this.y = -70;
   }
 
