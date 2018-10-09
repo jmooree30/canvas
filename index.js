@@ -13,7 +13,7 @@ enemy.src = "assets/enemy_2.png";
 let bullets = [];
 let enemies = [];
 let score = 0;
-let time = 100;
+let time = 120;
 
 class Enemy {
   constructor() {
@@ -148,33 +148,42 @@ setInterval(function() {
 
 setInterval(function() {
   time -= 1;
+  if (time <= 0) {
+    clearInterval(game);
+  }
 }, 1000);
 
-setInterval(function() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(stars, 0, player.imgOneY);
-  ctx.drawImage(stars, 0, player.imgTwoY);
-  ctx.drawImage(playerShip, player.x, player.y, 40, 40);
-  player.imgOneY += 1;
-  player.imgTwoY += 1;
-  if (player.imgOneY == 550) player.imgOneY = -625;
-  if (player.imgTwoY == 550) player.imgTwoY = -625;
-
-  bullets.forEach(e => {
-    ctx.drawImage(bullet, e.x, e.y);
-    e.update();
-  });
-
-  enemies.forEach(e => {
-    ctx.drawImage(enemy, e.x, e.y, 40, 40);
-    e.update();
-  });
-  ctx.font = "20px Arial";
-  ctx.fillStyle = "white";
-  ctx.fillText(`score: ${score}`, 10, 25);
-  ctx.fillText(`time: ${time}`, 10, 50);
-}, 5);
-const audio = new Audio("assets/sor.mp3");
-document.addEventListener("click", function() {
+function startGame() {
+  const audio = new Audio("assets/sor.mp3");
   audio.play();
+  let game = setInterval(function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(stars, 0, player.imgOneY);
+    ctx.drawImage(stars, 0, player.imgTwoY);
+    ctx.drawImage(playerShip, player.x, player.y, 40, 40);
+    player.imgOneY += 1;
+    player.imgTwoY += 1;
+    if (player.imgOneY == 550) player.imgOneY = -625;
+    if (player.imgTwoY == 550) player.imgTwoY = -625;
+
+    bullets.forEach(e => {
+      ctx.drawImage(bullet, e.x, e.y);
+      e.update();
+    });
+
+    enemies.forEach(e => {
+      ctx.drawImage(enemy, e.x, e.y, 40, 40);
+      e.update();
+    });
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "white";
+    ctx.fillText(`score: ${score}`, 10, 25);
+    ctx.fillText(`time: ${time}`, 10, 50);
+  }, 5);
+}
+
+let button = document.querySelector("button");
+button.addEventListener("click", function() {
+  startGame();
+  button.style.display = "none";
 });
