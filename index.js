@@ -146,14 +146,18 @@ setInterval(function() {
   enemies.push(en);
 }, 500);
 
-setInterval(function() {
-  time -= 1;
-  if (time <= 0) {
-    clearInterval(game);
-  }
-}, 1000);
-
 function startGame() {
+  setInterval(function() {
+    time -= 1;
+    if (time <= 0) {
+      clearInterval(game);
+      button.style.display = "inline";
+      button.innerHTML = "Play Again?";
+      audio.pause();
+      audio.currentTime = 0;
+      timer = 120;
+    }
+  }, 1000);
   const audio = new Audio("assets/sor.mp3");
   audio.play();
   let game = setInterval(function() {
