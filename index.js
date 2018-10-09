@@ -15,13 +15,29 @@ let enemies = [];
 
 class Enemy {
   constructor() {
-    this.x = Math.round(Math.random() * 1000);
+    this.x = Math.round(Math.random() * 700);
     this.y = -70;
     this.hit = false;
   }
 
   update() {
-    this.y += 3;
+    let that = this;
+    this.y += 1;
+    enemies.forEach((e, index) => {
+      if (e.y > 500) {
+        enemies.splice(index, 1);
+      }
+    });
+    bullets.forEach((e, index) => {
+      if (
+        e.y < that.y + 10 &&
+        e.y > that.y - 10 &&
+        (e.x < that.x + 25 && e.x > that.x - 25)
+      ) {
+        bullets.splice(index, 1);
+        enemies.splice(enemies.indexOf(that), 1);
+      }
+    });
   }
 }
 
@@ -139,14 +155,17 @@ setInterval(function() {
   player.imgTwoY += 1;
   if (player.imgOneY == 550) player.imgOneY = -625;
   if (player.imgTwoY == 550) player.imgTwoY = -625;
+
   bullets.forEach(e => {
     ctx.drawImage(bullet, e.x, e.y);
     e.update();
   });
 
   enemies.forEach(e => {
-    ctx.drawImage(enemy, e.x, e.y, 40, 40);
-    e.update();
+    if (e.hit === false) {
+      ctx.drawImage(enemy, e.x, e.y, 40, 40);
+      e.update();
+    }
   });
 }, 5);
 const audio = new Audio("assets/sor.mp3");
