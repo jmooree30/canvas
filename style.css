@@ -38,6 +38,7 @@ canvas {
 .info {
   padding: 10px;
   line-height: 1.5;
+  margin-bottom: 20px;
 }
 
 .controls {
