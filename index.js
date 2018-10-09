@@ -149,13 +149,14 @@ setInterval(function() {
 function startGame() {
   setInterval(function() {
     time -= 1;
-    if (time <= 0) {
+    if (time <= -1) {
       clearInterval(game);
       button.style.display = "inline";
       button.innerHTML = "Play Again?";
       audio.pause();
       audio.currentTime = 0;
-      timer = 120;
+      time = 120;
+      score = 0;
     }
   }, 1000);
   const audio = new Audio("assets/sor.mp3");
