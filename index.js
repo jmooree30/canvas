@@ -22,7 +22,7 @@ class Enemy {
 
   update() {
     let that = this;
-    this.y += 1;
+    this.y += 2;
     enemies.forEach((e, index) => {
       if (e.y > 500) {
         enemies.splice(index, 1);
@@ -32,7 +32,7 @@ class Enemy {
       if (
         e.y < that.y + 10 &&
         e.y > that.y - 10 &&
-        (e.x < that.x + 25 && e.x > that.x - 25)
+        (e.x < that.x + 27 && e.x > that.x - 27)
       ) {
         bullets.splice(index, 1);
         enemies.splice(enemies.indexOf(that), 1);
