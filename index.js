@@ -12,6 +12,7 @@ let enemy = new Image();
 enemy.src = "assets/enemy_2.png";
 let bullets = [];
 let enemies = [];
+let score = 0;
 
 class Enemy {
   constructor() {
@@ -36,6 +37,10 @@ class Enemy {
       ) {
         bullets.splice(index, 1);
         enemies.splice(enemies.indexOf(that), 1);
+        score += 100;
+      }
+      if (e.y < 0) {
+        bullets.splice(index, 1);
       }
     });
   }
@@ -167,6 +172,9 @@ setInterval(function() {
       e.update();
     }
   });
+  ctx.font = "20px Arial";
+  ctx.fillStyle = "white";
+  ctx.fillText(`score: ${score}`, 10, 50);
 }, 5);
 const audio = new Audio("assets/sor.mp3");
 document.addEventListener("click", function() {
