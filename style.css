@@ -20,6 +20,18 @@ canvas {
   background: #080808;
 }
 
+input {
+  width: 100%;
+  height: 40px;
+  margin: 0 auto;
+}
+
+li {
+  font-size: 10px;
+  line-height: 2;
+  list-style-type: none;
+}
+
 .container {
   position: absolute;
   margin-left: auto;
@@ -58,4 +70,28 @@ canvas {
 .button:hover {
   background: #dddd;
   border: 1px solid green;
+}
+
+.sidebar {
+  margin-top: 40px;
+  margin-right: 15px;
+  float: right;
+  height: 600px;
+  border: 5px solid black;
+  width: 180px;
+  border-radius: 5px solid black;
+}
+
+.score-input {
+  display: none;
+  padding: 20px;
+  height: 200px;
+  width: 400px;
+  z-index: 3;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background: white;
 }

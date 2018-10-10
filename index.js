@@ -1,4 +1,8 @@
 const canvas = document.getElementById("myCanvas");
+const scoreInput = document.querySelector(".score-input");
+const htmlScore = document.querySelector(".score");
+let submit = document.querySelector(".submit");
+let name = document.querySelector(".name");
 canvas.height = 475;
 canvas.width = 1000;
 const ctx = canvas.getContext("2d");
@@ -18,6 +22,7 @@ let score = 0;
 let time = 120;
 let life = ["+ ", "+ ", "+"];
 let godMode = false;
+let winningScore = 0;
 
 class Enemy {
   constructor() {
@@ -182,6 +187,8 @@ function startGame() {
   let countDown = setInterval(function() {
     time -= 1;
     if (time <= -1) {
+      scoreInput.style.display = "inline";
+      htmlScore.innerHTML = score;
       clearInterval(pushEnemies);
       clearInterval(game);
       clearInterval(countDown);
@@ -190,6 +197,7 @@ function startGame() {
       audio.pause();
       audio.currentTime = 0;
       time = 120;
+      winningScore = score;
       score = 0;
       enemies = [];
     }
@@ -224,7 +232,7 @@ function startGame() {
         score = 0;
         life = ["+ ", "+ ", "+"];
         enemies = [];
-        bullet = [];
+        bullets = [];
         return;
       }
       ctx.drawImage(enemy, e.x, e.y, 40, 40);
@@ -242,4 +250,41 @@ let button = document.querySelector("button");
 button.addEventListener("click", function() {
   startGame();
   button.style.display = "none";
+});
+
+fetch("https://fast-savannah-15479.herokuapp.com/api/scores")
+  .then(res => res.json())
+  .then(scores => {
+    let scoresArr = [];
+    scores.forEach(e => {
+      scoresArr.push(e);
+    });
+    let str = "<ul>";
+
+    scoresArr.forEach(function(slide) {
+      str += "<li>" + slide.name + ":&nbsp;" + slide.score + "</li>";
+    });
+
+    str += "</ul>";
+    document.querySelector(".each-score").innerHTML = str;
+  });
+
+submit.addEventListener("click", function() {
+  let scoreObj = {
+    name: name.value,
+    score: winningScore
+  };
+  fetch("https://fast-savannah-15479.herokuapp.com/api/scores", {
+    method: "POST",
+    body: JSON.stringify(scoreObj),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(res => res.json())
+    .then(response => {
+      console.log(response);
+      window.location.reload();
+    })
+    .catch(error => console.error("Error:", error));
 });
