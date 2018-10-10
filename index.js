@@ -141,12 +141,12 @@ document.addEventListener("keydown", function(e) {
   });
 });
 
-setInterval(function() {
-  let en = new Enemy();
-  enemies.push(en);
-}, 500);
-
 function startGame() {
+  setInterval(function() {
+    let en = new Enemy();
+    enemies.push(en);
+  }, 500);
+
   setInterval(function() {
     time -= 1;
     if (time <= -1) {
@@ -157,6 +157,7 @@ function startGame() {
       audio.currentTime = 0;
       time = 120;
       score = 0;
+      enemies = [];
     }
   }, 1000);
   const audio = new Audio("assets/sor.mp3");
