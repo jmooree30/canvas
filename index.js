@@ -259,12 +259,13 @@ fetch("https://fast-savannah-15479.herokuapp.com/api/scores")
     scores.forEach(e => {
       scoresArr.push(e);
     });
+    scoresArr.sort(function(a, b) {
+      return b.score - a.score;
+    });
     let str = "<ul>";
-
     scoresArr.forEach(function(slide) {
       str += "<li>" + slide.name + ":&nbsp;" + slide.score + "</li>";
     });
-
     str += "</ul>";
     document.querySelector(".each-score").innerHTML = str;
   });
