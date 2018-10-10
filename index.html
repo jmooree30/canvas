@@ -7,42 +7,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>pew pew</title>
-</head>
+  <title>Vanilla Javascript Space Shooter with Canvas</title>
+  <meta name="description" content="Space shooter game built with canvas and vanilla Javascript. The back end for the high scores is built with Express and hosted for free with Heroku. Any question feel free to email me at jmooree30@gmail.com"
+    </head>
 
-<body>
-  <div class="score-input">
-    <h2 class="controls">New High Score!</h2>
-    <div class="controls">Score:
-      <span class="score"></span>
+  <body>
+    <div class="score-input">
+      <h2 class="controls">New High Score!</h2>
+      <div class="controls">Score:
+        <span class="score"></span>
+      </div>
+      <br/>
+      <input class="name" type="text" placeholder="Initials Please =) JCM" maxlength="3">
+      <br/>
+      <br/>
+      <input class="submit" type="submit">
     </div>
-    <br/>
-    <input class="name" type="text" placeholder="Initials Please =) JCM" maxlength="3">
-    <br/>
-    <br/>
-    <input class="submit" type="submit">
-  </div>
-  <button class="button">Start Game</button>
-  <canvas id="myCanvas"></canvas>
-  <div class="container">
-    <div class="info controls">Rack up as many points before the timer runs out! </div>
-    <br>
-    <div class="controls">
-      <span>&#8593;</span> = Up
+    <button class="button">Start Game</button>
+    <canvas id="myCanvas"></canvas>
+    <div class="container">
+      <div class="info controls">Rack up as many points before the timer runs out! </div>
       <br>
-      <span>&darr;</span> = Down
-      <br>
-      <span>&larr;</span> = Left
-      <br>
-      <span>&rarr; </span> = Right
-      <br> Space = Shoot
+      <div class="controls">
+        <span>&#8593;</span> = Up
+        <br>
+        <span>&darr;</span> = Down
+        <br>
+        <span>&larr;</span> = Left
+        <br>
+        <span>&rarr; </span> = Right
+        <br> Space = Shoot
+      </div>
     </div>
-  </div>
-  <div class="container">
-    <h3 class="controls">High Scores</h3>
-    <div class="each-score controls"></div>
-  </div>
-  <script src="index.js"></script>
-</body>
+    <div class="container">
+      <h3 class="controls">High Scores</h3>
+      <div class="each-score controls"></div>
+    </div>
+    <script src="index.js"></script>
+  </body>
 
 </html>
