@@ -10,10 +10,14 @@ let bullet = new Image();
 bullet.src = "assets/bullet.png";
 let enemy = new Image();
 enemy.src = "assets/enemy_2.png";
+let exp = new Image();
+exp.src = "assets/exp.png";
 let bullets = [];
 let enemies = [];
 let score = 0;
 let time = 120;
+let life = ["+ ", "+ ", "+"];
+let godMode = false;
 
 class Enemy {
   constructor() {
@@ -25,6 +29,34 @@ class Enemy {
     let that = this;
     this.y += 2;
     enemies.forEach((e, index) => {
+      if (
+        e.y > player.y &&
+        e.y < player.y + 20 &&
+        e.x < player.x + 27 &&
+        e.x > player.x - 17
+      ) {
+        ctx.drawImage(
+          exp,
+          64,
+          64,
+          64,
+          64,
+          player.x - 10,
+          player.y - 10,
+          75,
+          75
+        );
+        const boom = new Audio("assets/boom.mp3");
+        boom.play();
+        boom.volume = 0.05;
+        if (godMode == false) {
+          life.pop();
+          godMode = true;
+          let twoSeconds = setTimeout(function() {
+            godMode = false;
+          }, 100);
+        }
+      }
       if (e.y > 500) {
         enemies.splice(index, 1);
       }
@@ -33,7 +65,7 @@ class Enemy {
       if (
         e.y < that.y + 10 &&
         e.y > that.y - 10 &&
-        (e.x < that.x + 27 && e.x > that.x - 27)
+        (e.x < that.x + 27 && e.x > that.x - 17)
       ) {
         bullets.splice(index, 1);
         enemies.splice(enemies.indexOf(that), 1);
@@ -142,15 +174,17 @@ document.addEventListener("keydown", function(e) {
 });
 
 function startGame() {
-  setInterval(function() {
+  let pushEnemies = setInterval(function() {
     let en = new Enemy();
     enemies.push(en);
   }, 500);
 
-  setInterval(function() {
+  let countDown = setInterval(function() {
     time -= 1;
     if (time <= -1) {
+      clearInterval(pushEnemies);
       clearInterval(game);
+      clearInterval(countDown);
       button.style.display = "inline";
       button.innerHTML = "Play Again?";
       audio.pause();
@@ -178,6 +212,21 @@ function startGame() {
     });
 
     enemies.forEach(e => {
+      if (life.length === 0) {
+        clearInterval(pushEnemies);
+        clearInterval(game);
+        clearInterval(countDown);
+        button.style.display = "inline";
+        button.innerHTML = "Play Again?";
+        audio.pause();
+        audio.currentTime = 0;
+        time = 120;
+        score = 0;
+        life = ["+ ", "+ ", "+"];
+        enemies = [];
+        bullet = [];
+        return;
+      }
       ctx.drawImage(enemy, e.x, e.y, 40, 40);
       e.update();
     });
@@ -185,6 +234,7 @@ function startGame() {
     ctx.fillStyle = "white";
     ctx.fillText(`score: ${score}`, 10, 25);
     ctx.fillText(`time: ${time}`, 10, 50);
+    ctx.fillText(`lives: ${life.join("")}`, 880, 25);
   }, 5);
 }
 
