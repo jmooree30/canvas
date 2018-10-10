@@ -164,6 +164,7 @@ player.startPosition();
 let lastKeyDown = null;
 document.addEventListener("keydown", function(e) {
   if (e.keyCode === 32 && lastKeyDown != e.keyCode) {
+    e.preventDefault();
     let newBullet = new Bullet(player.x, player.y);
     bullets.push(newBullet);
     const pew = new Audio("assets/laser.mp3");
@@ -182,7 +183,7 @@ function startGame() {
   let pushEnemies = setInterval(function() {
     let en = new Enemy();
     enemies.push(en);
-  }, 500);
+  }, 200);
 
   let countDown = setInterval(function() {
     time -= 1;
