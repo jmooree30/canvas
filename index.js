@@ -35,10 +35,10 @@ class Enemy {
     this.y += 2;
     enemies.forEach((e, index) => {
       if (
-        e.y > player.y &&
-        e.y < player.y + 20 &&
+        e.y >= player.y &&
+        e.y < player.y + 10 &&
         e.x < player.x + 27 &&
-        e.x > player.x - 17
+        e.x > player.x - 27
       ) {
         ctx.drawImage(
           exp,
@@ -132,6 +132,7 @@ class Player {
   }
 
   move(e) {
+    e.preventDefault();
     if (e.keyCode === 39) {
       this.draw("x", 4);
     }
